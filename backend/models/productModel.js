@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
     require: true,
   },
   price: {
-    type: number,
+    type: Number,
     require: true,
   },
   image: {
@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema({
     require: true,
   },
   date: {
-    type: number,
+    type: Number,
     require: true,
   },
 });
