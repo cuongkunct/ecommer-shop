@@ -47,7 +47,7 @@ const addProduct = async (req, res) => {
       category,
       price: Number(price), // ép kiểu về số
       subCategory,
-      bestSeller: bestSeller === "true", // ép về boolean
+      bestSeller: bestSeller === "true" ? "true" : "false", // ép về boolean
       sizes: JSON.parse(sizes), // parse từ string thành mảng
       image: imageUrl,
       date: Date.now(),
@@ -55,10 +55,14 @@ const addProduct = async (req, res) => {
 
     // Lưu vào MongoDB
     const product = new productModel(productData);
-    await product.save();
+    const productInfo = await product.save();
 
     // Trả về response
-    res.json({ status: "success", message: "Product added successfully" });
+    res.json({
+      status: "success",
+      message: "Product added successfully",
+      data: productInfo,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({

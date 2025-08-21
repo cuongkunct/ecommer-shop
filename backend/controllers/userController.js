@@ -71,6 +71,22 @@ const registerUser = async (req, res) => {
   }
 };
 
-const adminLogin = async (req, res) => {};
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      //Tạo token login
+      const token = createToken(email + password, process.env.JWT_SECRET);
+      return res.json({ status: "success", token });
+    } else {
+      return res.json({ status: false, message: "Invalid Credentials" });
+    }
+  } catch (error) {
+    return res.json({ status: false, message: error });
+  }
+};
 
 export { loginUser, registerUser, adminLogin };
