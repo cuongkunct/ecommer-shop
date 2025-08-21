@@ -13,7 +13,7 @@ function Navbar() {
           {" "}
           <img src={assets.logo} className="w-36" alt="Logo" />
         </Link>
-        <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
+        <ul className="hidden sm:flex gap-5 text-sm text-gray-700 items-center">
           <NavLink to="/" className="flex flex-col items-center gap-1">
             <p>HOME</p>
             <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
@@ -63,6 +63,12 @@ function Navbar() {
               {getCartCount()}
             </p>
           </Link>
+          <NavLink to="/admin" className="flex flex-col items-center gap-1">
+            <p className="bg-gray-300 border border-gray-1000 rounded-full py-2 px-4 hover:bg-black hover:text-white">
+              ADMIN
+            </p>
+          </NavLink>
+
           <img
             onClick={() => setVisible(!visible)}
             src={assets.menu_icon}
