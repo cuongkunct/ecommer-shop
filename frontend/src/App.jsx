@@ -23,6 +23,7 @@ import LoginAdmin from "./admin/pages/Login";
 import Dashboard from "./admin/pages/Dashboard";
 import ItemList from "./admin/component/ItemList";
 import OrderList from "./admin/component/OrderList";
+import AddItem from "./admin/component/AddItem";
 // Lấy URL backend từ biến môi trường (.env)
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -88,8 +89,8 @@ const App = () => {
               }
             >
               {/* Route con bên trong Dashboard */}
-              <Route path="item" element={<ItemList />} />
-              <Route path="add" element={<OrderList />} />
+              <Route path="add" element={<AddItem />} />
+              <Route path="list" element={<ItemList />} />
             </Route>
           </Routes>
         </div>

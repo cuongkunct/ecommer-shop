@@ -11,7 +11,7 @@ function NavBar({ setToken }) {
   };
 
   return (
-    <div className="flex justify-between mt-4 p-2 border-b border-gray-400">
+    <div className="flex justify-between mt-4 p-2 border-b border-gray-400 w-full">
       <img className="w-36" src={assets.logo} alt="" />
       <button
         onClick={handleLogout}

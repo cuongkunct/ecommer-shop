@@ -8,18 +8,18 @@ function Dashboard({ setToken }) {
     <>
       <NavBar setToken={setToken} />
       <div className="flex w-full">
-        <div className="w-[18%] min-h-screen flex flex-col gap-8 border-r border-gray-500 mt-4">
-          <Link
-            className="bg-gray-300 rounded-tl-full rounded-bl-full p-2 text-center"
-            to="/admin/dashboard/item"
-          >
-            Item List
-          </Link>
+        <div className=" min-h-screen flex flex-col gap-8 border-r border-gray-500 mt-4">
           <Link
             className="bg-gray-300 rounded-tl-full rounded-bl-full p-2 text-center"
             to="/admin/dashboard/add"
           >
-            Add Item
+            + Add product
+          </Link>
+          <Link
+            className="bg-gray-300 rounded-tl-full rounded-bl-full p-2 text-center"
+            to="/admin/dashboard/list"
+          >
+            Item List
           </Link>
         </div>
         {/* Nội dung chính */}
