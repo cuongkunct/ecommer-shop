@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 // Import các trang (pages) của user
@@ -21,13 +21,14 @@ import Footer from "./user/components/Footer";
 // Import các trang của admin
 import LoginAdmin from "./admin/pages/Login";
 import Dashboard from "./admin/pages/Dashboard";
-
+import ItemList from "./admin/component/ItemList";
+import OrderList from "./admin/component/OrderList";
 // Lấy URL backend từ biến môi trường (.env)
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const App = () => {
   const location = useLocation(); // Lấy thông tin URL hiện tại
-
+  const navigate = useNavigate();
   // State lưu token (JWT) - kiểm tra trong localStorage trước
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
@@ -38,8 +39,13 @@ const App = () => {
 
   // Mỗi khi token thay đổi thì lưu lại vào localStorage
   useEffect(() => {
+    console.log("token: ", token);
     localStorage.setItem("token", token);
-  }, [token]);
+    // Nếu có token và đang ở trang login admin → tự động chuyển sang dashboard
+    if (token !== "" && location.pathname === "/admin") {
+      navigate("/admin/dashboard");
+    }
+  }, [token, location.pathname, navigate]);
 
   // Route bảo vệ cho admin
   const PrivateRoute = ({ element }) => {
@@ -50,38 +56,41 @@ const App = () => {
 
   return (
     <>
-      {/* Nếu KHÔNG phải trang admin */}
       {!isAdminPage ? (
         <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-          <ToastContainer /> {/* Hiển thị thông báo */}
-          <Navbar /> {/* Thanh điều hướng */}
-          <SearchBar /> {/* Thanh tìm kiếm */}
-          {/* Các route cho user */}
+          <ToastContainer />
+          <Navbar />
+          <SearchBar />
           <Routes>
+            {/* User routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/product/:productId" element={<Product />} />{" "}
+            <Route path="/product/:productId" element={<Product />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/place-order" element={<PlaceOrder />} />{" "}
+            <Route path="/place-order" element={<PlaceOrder />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Carts />} />
           </Routes>
-          <Footer /> {/* Footer */}
+          <Footer />
         </div>
       ) : (
-        // Nếu LÀ trang admin
         <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
           <Routes>
-            {/* Trang login admin */}
             <Route path="/admin" element={<LoginAdmin setToken={setToken} />} />
 
-            {/* Trang dashboard admin - cần có token */}
+            {/* Route cha Dashboard */}
             <Route
               path="/admin/dashboard"
-              element={<PrivateRoute element={<Dashboard />} />}
-            />
+              element={
+                <PrivateRoute element={<Dashboard setToken={setToken} />} />
+              }
+            >
+              {/* Route con bên trong Dashboard */}
+              <Route path="item" element={<ItemList />} />
+              <Route path="add" element={<OrderList />} />
+            </Route>
           </Routes>
         </div>
       )}
