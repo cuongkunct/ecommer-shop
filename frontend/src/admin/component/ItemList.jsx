@@ -4,9 +4,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-function ItemList() {
+function ItemList({ token }) {
   const [products, setProduct] = useState([]);
   console.log("product: ", products);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -24,6 +25,27 @@ function ItemList() {
     fetchProducts();
   }, []);
 
+  const removeProduct = async (idProduct) => {
+    try {
+      const res = await axios.post(
+        backendUrl + "/api/product/removeProduct",
+        {
+          id: idProduct,
+        },
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      console.log(res);
+      if (res.data.status === "success") {
+        setProduct((prev) => prev.filter((p) => p._id !== idProduct));
+      }
+    } catch (error) {
+      toast.error("Error when fetching products!");
+    }
+  };
   return (
     <div className="w-[80%] my-3 text-gray-600 text-base">
       <div className="flex flex-col w-full mt-3 p-2 gap-4">
@@ -39,7 +61,11 @@ function ItemList() {
             />
             <div className="p-2">{item.name}</div>
             <div className="flex gap-6 p-2">
-              <FaTrash size={26} className="text-red-500 cursor-pointer" />
+              <FaTrash
+                onClick={() => removeProduct(item._id)}
+                size={26}
+                className="text-red-500 cursor-pointer"
+              />
               <FaEdit size={26} className="text-blue-500 cursor-pointer" />
             </div>
           </div>

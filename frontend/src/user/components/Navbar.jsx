@@ -2,10 +2,19 @@ import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
+import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ setUserToken }) {
   const [visible, setVisible] = useState(false);
   const { setShowSearch, getCartCount, navigate } = useContext(ShopContext);
+  const token = localStorage.getItem("userToken");
+  console.log("localStorage: ", token);
+  const handleLogout = () => {
+    localStorage.removeItem("userToken"); // xóa token khỏi localStorage
+    setUserToken(""); // reset state token
+    navigate("/login"); // chuyển hướng về trang login
+  };
+
   return (
     <>
       <div className=" flex items-center justify-between py-5 font-medium">
@@ -43,17 +52,32 @@ function Navbar() {
             alt=""
           />
           <div className="group relative">
-            <img
-              onClick={() => navigate("/login")}
-              src={assets.profile_icon}
-              className="w-5 cursor-pointer"
-              alt=""
-            />
+            {token !== "" ? (
+              <img
+                onClick={() => navigate("/profile")}
+                src={assets.profile_icon}
+                className="w-5 cursor-pointer"
+                alt=""
+              />
+            ) : (
+              <img
+                onClick={() => navigate("/login")}
+                src={assets.profile_icon}
+                className="w-5 cursor-pointer"
+                alt=""
+              />
+            )}
+
             <div className="hidden group-hover:block absolute right-0 pt-4">
               <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-gray-100 text-gray-600 rounded-xl">
                 <p className="cursor-pointer hover:text-black">My Profile</p>
                 <p className="cursor-pointer hover:text-black">Order</p>
-                <p className="cursor-pointer hover:text-black">Logout</p>
+                <p
+                  onClick={handleLogout}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Logout
+                </p>
               </div>
             </div>
           </div>

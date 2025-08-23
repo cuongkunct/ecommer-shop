@@ -12,6 +12,7 @@ import Login from "./user/pages/Login";
 import PlaceOrder from "./user/pages/PlaceOrder";
 import Orders from "./user/pages/Orders";
 import Carts from "./user/pages/Carts";
+import Profile from "./user/pages/Profile";
 
 // Import các component chung của user
 import Navbar from "./user/components/Navbar";
@@ -35,6 +36,9 @@ const App = () => {
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
 
+  const [userToken, setUserToken] = useState(
+    localStorage.getItem("userToken") ? localStorage.getItem("userToken") : ""
+  );
   // Kiểm tra nếu path hiện tại bắt đầu bằng "/admin"
   const isAdminPage = location.pathname.startsWith("/admin");
 
@@ -48,6 +52,15 @@ const App = () => {
     }
   }, [token, location.pathname, navigate]);
 
+  useEffect(() => {
+    console.log("userToken: ", userToken);
+    localStorage.setItem("userToken", userToken);
+    // Nếu có token và đang ở trang login admin → tự động chuyển sang dashboard
+    if (userToken !== "" && location.pathname === "/login") {
+      navigate("/");
+    }
+  }, [userToken, navigate]);
+
   // Route bảo vệ cho admin
   const PrivateRoute = ({ element }) => {
     // Nếu có token → hiển thị trang admin
@@ -60,7 +73,7 @@ const App = () => {
       {!isAdminPage ? (
         <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
           <ToastContainer />
-          <Navbar />
+          <Navbar setUserToken={setUserToken} />
           <SearchBar />
           <Routes>
             {/* User routes */}
@@ -69,10 +82,14 @@ const App = () => {
             <Route path="/collection" element={<Collection />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/product/:productId" element={<Product />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Login setUserToken={setUserToken} />}
+            />
             <Route path="/place-order" element={<PlaceOrder />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Carts />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
         </div>
@@ -91,7 +108,7 @@ const App = () => {
             >
               {/* Route con bên trong Dashboard */}
               <Route path="add" element={<AddItem token={token} />} />
-              <Route path="list" element={<ItemList />} />
+              <Route path="list" element={<ItemList token={token} />} />
             </Route>
           </Routes>
         </div>
