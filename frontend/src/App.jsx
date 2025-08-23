@@ -78,6 +78,7 @@ const App = () => {
         </div>
       ) : (
         <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+          <ToastContainer />
           <Routes>
             <Route path="/admin" element={<LoginAdmin setToken={setToken} />} />
 
@@ -89,7 +90,7 @@ const App = () => {
               }
             >
               {/* Route con bên trong Dashboard */}
-              <Route path="add" element={<AddItem />} />
+              <Route path="add" element={<AddItem token={token} />} />
               <Route path="list" element={<ItemList />} />
             </Route>
           </Routes>
