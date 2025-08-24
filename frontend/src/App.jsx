@@ -59,7 +59,7 @@ const App = () => {
     if (userToken !== "" && location.pathname === "/login") {
       navigate("/");
     }
-  }, [userToken, navigate]);
+  }, [userToken, navigate, location.pathname]);
 
   // Route bảo vệ cho admin
   const PrivateRoute = ({ element }) => {

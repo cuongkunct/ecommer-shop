@@ -13,6 +13,9 @@ const ShopContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItem, setCartItem] = useState({});
+
+  localStorage.setItem("cartItem", cartItem);
+
   const navigate = useNavigate();
   // Handle Add to Cart Function
   const addToCart = async (itemId, size) => {
