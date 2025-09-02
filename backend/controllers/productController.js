@@ -19,6 +19,9 @@ const addProduct = async (req, res) => {
       bestSeller,
     } = req.body;
 
+    console.log(sizes);
+    console.log(typeof sizes);
+
     // Lấy file upload từ request (multer lưu ở req.files)
     const image1 = req.files.image1 && req.files.image1[0];
     const image2 = req.files.image2 && req.files.image2[0];
@@ -48,7 +51,7 @@ const addProduct = async (req, res) => {
       price: Number(price), // ép kiểu về số
       subCategory,
       bestSeller: bestSeller === "true" ? "true" : "false", // ép về boolean
-      sizes: JSON.parse(sizes), // parse từ string thành mảng
+      sizes: JSON.parse(sizes),
       image: imageUrl,
       date: Date.now(),
     };

@@ -81,7 +81,7 @@ function Collection() {
   //useEffect when changing sortType category, subCategory
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory, search]);
+  }, [category, subCategory, search, products]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">

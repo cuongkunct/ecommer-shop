@@ -99,7 +99,7 @@ function Product() {
             </button>
 
             <div
-              class="text-sm text-gray-500 mt-5 flex flex-col gap-1"
+              className="text-sm text-gray-500 mt-5 flex flex-col gap-1"
               bis_skin_checked="1"
             >
               <p>100% Original product.</p>
@@ -110,13 +110,13 @@ function Product() {
         </div>
       </div>
 
-      <div class="mt-20" bis_skin_checked="1">
-        <div class="flex" bis_skin_checked="1">
-          <b class="border px-5 py-3 text-sm">Description</b>
-          <p class="border px-5 py-3 text-sm">Reviews (122)</p>
+      <div className="mt-20" bis_skin_checked="1">
+        <div className="flex" bis_skin_checked="1">
+          <b className="border px-5 py-3 text-sm">Description</b>
+          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
         </div>
         <div
-          class="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500"
+          className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500"
           bis_skin_checked="1"
         >
           <p>

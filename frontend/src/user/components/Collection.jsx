@@ -6,10 +6,10 @@ import Title from "./Title";
 function Collection() {
   const { products } = useContext(ShopContext);
   const [collection, setCollection] = useState([]);
-
+  console.log(products);
   useEffect(() => {
     setCollection(products.slice(0, 10));
-  }, []);
+  }, [products]);
 
   console.log(collection);
   return (
